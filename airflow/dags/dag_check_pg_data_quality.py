@@ -6,6 +6,7 @@ from datetime import timedelta
 from airflow.models.param import Param
 from airflow.models import Variable
 import pandas as pd
+import json
 
 TARGET_CONN_ID = Variable.get("target_pg_conn_id")
 METRICS_CONN_ID = Variable.get("metrics_pg_conn_id")
@@ -64,11 +65,11 @@ def log_data_quality(**context):
         df = pd.read_sql(query, target_hook.get_conn())
 
         # Duplicate count
-        dup_count = df.duplicated().sum()
+        dup_count = int(df.duplicated().sum())
 
         # Null columns
-        null_cols = df.isnull().sum()
-        null_columns = {col: int(count) for col, count in null_cols.items() if count > 0}
+        # null_cols = df.isnull().sum()
+        null_columns = {col: int(count) for col, count in df.isnull().sum().items() if count > 0}
 
         # Outlier detection (numeric columns, z-score method)
         numeric_df = df.select_dtypes(include=['int64', 'float64'])
@@ -78,6 +79,7 @@ def log_data_quality(**context):
             outliers = (abs(z_scores) > 3).sum()
             outlier_info = {col: int(count) for col, count in outliers.items() if count > 0}
 
+        # Insert
         metrics_hook.run(
             """
             INSERT INTO monitored_table_quality 
