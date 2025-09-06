@@ -1,0 +1,69 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Airflow logs
+logs/
+*.log
+
+# Airflow SQLite DB (if used)
+airflow.db
+airflow.db-journal
+
+# Airflow config files (if generated)
+airflow.cfg
+webserver_config.py
+
+# Environment files
+!.env
+!.env.*
+!.env.example
+
+# Virtualenv
+venv/
+.venv/
+
+# Pyenv
+.python-version
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+
+# System files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Docker
+**/__pycache__/
+**/*.pyc
+docker-compose.override.yml
+
+# Test cache
+.pytest_cache/
+
+# Pip dependency files
+pip-log.txt
+pip-delete-this-directory.txt
+
+# MyPy
+.mypy_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# pytest logs
+*.cover
+.cache/
+
+# Other
+*.swp
